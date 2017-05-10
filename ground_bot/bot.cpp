@@ -42,11 +42,12 @@ Point start()
 	{
 		vc>>frame;
 		bot_radius = radius((float)h);
-		Mat img2(frame.rows,frame.cols,CV_8UC1);
+		Mat img1(frame.rows,frame.cols,CV_8UC3),img2(frame.rows,frame.cols,CV_8UC1);
 	GaussianBlur(frame, frame, Size(3, 3), 6, 6);
-	cvtColor(frame, img2, CV_BGR2GRAY);
+	fastNlMeansDenoisingColored(frame,img1,th,th,t_winsize,s_winsize);
+	cvtColor(img1, img2, CV_BGR2GRAY);
 	vector<Vec3f> circles;
-	Canny(img2,img2 ,130 ,200);
+	Canny(img2,img2 ,50 ,100);
 	HoughCircles(img2, circles, CV_HOUGH_GRADIENT, 1, 50, 100, 20, bot_radius-5, bot_radius+5);
 	for (size_t i = 0; i < circles.size(); i++)	//for loop for displaying the detected circles
 		{
