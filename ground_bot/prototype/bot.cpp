@@ -9,10 +9,6 @@
 #define BOT_RADIUS 43		//radius of ground bot
 #define HEIGHT 220	//HEIGHT at which the reference was taken
 #define PIXEL_LENGTH 85			//Pixel width of ground bot at reference pic
-#define th 13
-#define t_winsize 7
-#define s_winsize 30
-
 
 using namespace std;
 using namespace cv;
