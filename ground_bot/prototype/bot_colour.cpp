@@ -65,7 +65,6 @@ void colour()
 		inRange(img1, Scalar(h, s, v), Scalar(th, ts, tv), img2);
 		Canny(img2, img2, 50, 100);
 		float countx=0,county=0;
-		int flag=0;
 		int min=10000,gbot;
 		Point gbot_pos;
 		findContours(img2, contours, hierarchy,RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
@@ -94,95 +93,17 @@ void colour()
 		}
 
 		}
-		if(gbot_pos.x<COLS/2)
+		
+		for(i=0;i<linesv.size()-1;i++)
 		{
-			flag=0;
-			for(i=0;i<linesv.size();i++)
-			{
-				if(linesv[i]>gbot_pos.x && linesv[i]<COLS/2)
-				{
-					if(flag==0)
-						countx+=(float)(-(gbot_pos.x)+linesv[i-1])/(linesv[i]-linesv[i-1]);
-					countx++;
-					flag=1;
-				}
-				else
-				{
-					if(flag==1)
-						break;
-				}
-			}
-			countx+=(float)((COLS/2)-linesv[i-1])/(linesv[i]-linesv[i-1]);
-			countx--;
-			countx*=-1;
-
+			if(linesv[i]<COLS/2 && linesv[i+1]>COLS/2)
+				countx=(float)gbot_pos.x/(linesv[i+1]-linesv[i]);
 		}
 
-		else if(gbot_pos.x>COLS/2)
+		for(i=0;i<linesh.size()-1;i++)
 		{
-			flag=0;
-			for(i=0;i<linesv.size();i++)
-			{
-				if(linesv[i]<gbot_pos.x && linesv[i]>COLS/2)
-				{
-					if(flag==0)
-						countx+=(float)(-(COLS/2)+linesv[i])/(linesv[i]-linesv[i-1]);
-					countx++;
-					flag=1;
-				}
-				else
-				{
-					if(flag==1)
-						break;
-				}
-			}
-			countx+=(float)((gbot_pos.x)-linesv[i-1])/(linesv[i]-linesv[i-1]);
-			countx--;
-		}
-
-		if(gbot_pos.y<ROWS/2)
-		{
-			flag=0;
-			for(i=0;i<linesh.size();i++)
-			{
-				if(linesh[i]>gbot_pos.y && linesh[i]<ROWS/2)
-				{
-					if(flag==0)
-						county+=(float)(-(gbot_pos.y)+linesh[i-1])/(linesh[i]-linesh[i-1]);
-					county++;
-					flag=1;
-				}
-				else
-				{
-					if(flag==1)
-						break;
-				}
-			}
-			county+=(float)((ROWS/2)-linesh[i-1])/(linesh[i]-linesh[i-1]);
-			county--;
-			county*=-1;
-
-		}
-		else if(gbot_pos.y>ROWS/2)
-		{
-			flag=0;
-			for(i=0;i<linesh.size();i++)
-			{
-				if(linesh[i]>gbot_pos.y && linesh[i]<ROWS/2)
-				{
-					if(flag==0)
-						county+=(float)(-(ROWS/2)+linesh[i-1])/(linesh[i]-linesh[i-1]);
-					county++;
-					flag=1;
-				}
-				else
-				{
-					if(flag==1)
-						break;
-				}
-			}
-			county+=(float)((gbot_pos.y)-linesh[i-1])/(linesh[i]-linesh[i-1]);
-			county--;
+			if(linesh[i]<ROWS/2 && linesh[i+1]>ROWS/2)
+				county=(float)gbot_pos.y/(linesh[i+1]-linesh[i]);
 		}
 		cout<<countx<<","<<county<<endl;
 		imshow("win", img2);
