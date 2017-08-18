@@ -18,7 +18,8 @@ Mat img;
 Mat img1,img2;
 int h = 0, th =180 ,s=0,ts=255,v=0,tv=255,dist;
 
-vector<vector <Vec2f> > lines;
+vector <float> linesh;
+vector <float> linesv;
 vector<vector<Point> > contours;
 vector<Vec4i> hierarchy;
 Point quad;
@@ -93,15 +94,15 @@ void colour()
 		}
 
 		}
-		/*if(gbot_pos.x<COLS/2)
+		if(gbot_pos.x<COLS/2)
 		{
 			flag=0;
-			for(i=0;i<lines[0].size();i++)
+			for(i=0;i<linesv.size();i++)
 			{
-				if(lines[0][i][0]>gbot_pos.x && lines[0][i][0]<COLS/2)
+				if(linesv[i]>gbot_pos.x && linesv[i]<COLS/2)
 				{
 					if(flag==0)
-						countx+=(float)(-(gbot_pos.x)+lines[0][i-1][0])/(lines[0][i][0]-lines[0][i-1][0]);
+						countx+=(float)(-(gbot_pos.x)+linesv[i-1])/(linesv[i]-linesv[i-1]);
 					countx++;
 					flag=1;
 				}
@@ -111,20 +112,21 @@ void colour()
 						break;
 				}
 			}
-			countx+=(float)((COLS/2)-lines[0][i-1][0])/(lines[0][i][0]-lines[0][i-1][0]);
+			countx+=(float)((COLS/2)-linesv[i-1])/(linesv[i]-linesv[i-1]);
 			countx--;
+			countx*=-1;
 
 		}
 
 		else if(gbot_pos.x>COLS/2)
 		{
 			flag=0;
-			for(i=0;i<lines[0].size();i++)
+			for(i=0;i<linesv.size();i++)
 			{
-				if(lines[0][i][0]<gbot_pos.x && lines[0][i][0]>COLS/2)
+				if(linesv[i]<gbot_pos.x && linesv[i]>COLS/2)
 				{
 					if(flag==0)
-						countx+=(float)(-(COLS/2)+lines[0][i][0])/(lines[0][i][0]-lines[0][i-1][0]);
+						countx+=(float)(-(COLS/2)+linesv[i])/(linesv[i]-linesv[i-1]);
 					countx++;
 					flag=1;
 				}
@@ -134,19 +136,19 @@ void colour()
 						break;
 				}
 			}
-			countx+=(float)((gbot_pos.x)-lines[0][i-1][0])/(lines[0][i][0]-lines[0][i-1][0]);
+			countx+=(float)((gbot_pos.x)-linesv[i-1])/(linesv[i]-linesv[i-1]);
 			countx--;
 		}
 
 		if(gbot_pos.y<ROWS/2)
 		{
 			flag=0;
-			for(i=0;i<lines[1].size();i++)
+			for(i=0;i<linesh.size();i++)
 			{
-				if(lines[1][i][0]>gbot_pos.y && lines[1][i][0]<ROWS/2)
+				if(linesh[i]>gbot_pos.y && linesh[i]<ROWS/2)
 				{
 					if(flag==0)
-						county+=(float)(-(gbot_pos.y)+lines[1][i-1][0])/(lines[1][i][0]-lines[1][i-1][0]);
+						county+=(float)(-(gbot_pos.y)+linesh[i-1])/(linesh[i]-linesh[i-1]);
 					county++;
 					flag=1;
 				}
@@ -156,19 +158,20 @@ void colour()
 						break;
 				}
 			}
-			county+=(float)((ROWS/2)-lines[1][i-1][0])/(lines[1][i][0]-lines[1][i-1][0]);
+			county+=(float)((ROWS/2)-linesh[i-1])/(linesh[i]-linesh[i-1]);
 			county--;
+			county*=-1;
 
 		}
 		else if(gbot_pos.y>ROWS/2)
 		{
 			flag=0;
-			for(i=0;i<lines[1].size();i++)
+			for(i=0;i<linesh.size();i++)
 			{
-				if(lines[1][i][0]>gbot_pos.y && lines[1][i][0]<ROWS/2)
+				if(linesh[i]>gbot_pos.y && linesh[i]<ROWS/2)
 				{
 					if(flag==0)
-						county+=(float)(-(ROWS/2)+lines[1][i-1][0])/(lines[1][i][0]-lines[1][i-1][0]);
+						county+=(float)(-(ROWS/2)+linesh[i-1])/(linesh[i]-linesh[i-1]);
 					county++;
 					flag=1;
 				}
@@ -178,16 +181,14 @@ void colour()
 						break;
 				}
 			}
-			county+=(float)((gbot_pos.y)-lines[1][i-1][0])/(lines[1][i][0]-lines[1][i-1][0]);
+			county+=(float)((gbot_pos.y)-linesh[i-1])/(linesh[i]-linesh[i-1]);
 			county--;
-		}*/
+		}
 		cout<<countx<<","<<county<<endl;
 		imshow("win", img2);
 		waitKey(10);
 	}
 }
-
-
 
 int main()
 {
